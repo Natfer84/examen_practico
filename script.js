@@ -3,56 +3,58 @@ const urlTienda = "https://fakestoreapi.com/products?limit=10";
 console.log(urlTienda);
 let contTienda = document.getElementById("cont_product");
 
+
 async function tienda() {
     try {
-        let tienda = await fetch(urlTienda); //cojo la informacion de la url
-        let productos = await tienda.json(); // paso la informacion a array
-        
+        let tienda = await fetch(urlTienda);
+        let productos = await tienda.json();
         contTienda.textContent = '';
 
         console.log(productos);
 
-        productos.forEach(producto => {    //el parámetro producto contiene todo el array 
-            /////CREO UN DIV PARA METER TODO EL PRODUCTO//////////
+        productos.forEach(producto => {
+
             const productDiv = document.createElement('div');
             productDiv.classList.add('product');
-            //CREO IMAGEN//
+
             const imagen = document.createElement('img');
             imagen.src = producto.image;
             imagen.alt = producto.description;
-            //console.log(imagen);
 
-            //////CREO OTRO DIV PARA METER LOS DETALLES///////////
             const detallesProdu = document.createElement("div");
             detallesProdu.classList.add("detalles_producto");
 
-            //detalle h2//
-            const titulo = document.createElement("h2");
-            titulo.textContent = `Nombre: ${producto.title}`;
+            const categoria = document.createElement("h2");
+            categoria.textContent = `Catgoría: ${producto.category}`;
 
-            //detalle descripción//
             const des = document.createElement("p");
             des.textContent = `Descripción: ${producto.description}`;
 
-            //detalle precio//
+            const id = document.createElement("p");
+            id.textContent = `Code: ${producto.id}`;
+
             const precio = document.createElement("p");
             precio.textContent = `Precio: ${producto.price}`;
 
-            //meto cada div como hijo//
-            detallesProdu.appendChild(titulo);
+            const titulo = document.createElement("h3");
+            titulo.textContent = `Nombre: ${producto.title}`;
+
+            detallesProdu.appendChild(categoria);
             detallesProdu.appendChild(des);
+            detallesProdu.appendChild(id);
+            detallesProdu.appendChild(titulo);
             detallesProdu.appendChild(precio);
             productDiv.appendChild(imagen);
             productDiv.appendChild(detallesProdu);
             contTienda.appendChild(productDiv);
 
-            //console.log(productDiv);
         });
 
- } catch (error) {
-        // Mostrar mensaje de error
+    } catch (error) {
+
         productsDiv.textContent = `Hubo un error al cargar los productos: ${error}`;
     }
 }
 
 tienda();
+
